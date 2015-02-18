@@ -43,14 +43,14 @@ def init_board():
 def print_board(board):
     for x in board:
         for y in enumerate(x):
-            print x[y[0]],
-        print "\n"
+            print(x[y[0]] + " ", end="")
+        print("\n")
 
 def print_stars(board):
     for x in board:
         for y in enumerate(x):
-            print "*",
-        print "\n"
+            print("* ", end="")
+        print("\n")
 
 
 def view_pos(my_new_board, pos_row, pos_col, temp):
@@ -59,11 +59,11 @@ def view_pos(my_new_board, pos_row, pos_col, temp):
         for y in enumerate(my_new_board[x[0]]):
             col = y[0]
             if((row == pos_row and col == pos_col) or  ([row, col] in discovered) or (temp[0] == row and temp[1] == col)):
-                print my_new_board[row][col],
+                print(my_new_board[row][col] + " ", end=""),
             else:
                 #print progress_board[row][col],
-                print "*", 
-        print "\n"
+                print("* ", end="") 
+        print("\n")
     
 def loc_to_pos(loc):
     row = 0
@@ -81,32 +81,31 @@ def loc_to_pos(loc):
 def main():
     #beginning board
     start_time = time.time()
-    my_new_board = init_board()
-    winning_board = my_new_board  
+    my_new_board = init_board() #initilize new board
+    winning_board = my_new_board  #set winning board to initilized board
     
     #print_board(my_new_board)
     print_stars(my_new_board)
     
-    while len(discovered) < board_w*board_h:
+    while len(discovered) < board_w*board_h: #loop as long as board hasn't been solved
         
-        first_pos_row, first_pos_col = loc_to_pos(int(raw_input("Enter first location to show: ")));
+        first_pos_row, first_pos_col = loc_to_pos(int(input("Enter first location to show: ")));
         
-        #view_pos(my_new_board, progress_board, pos_row_to_show, pos_col_to_show)
         view_pos(my_new_board, first_pos_row, first_pos_col, ["", ""])
         
-        sec_pos_row, sec_pos_col = loc_to_pos(int(raw_input("Enter second location to show: ")));
+        sec_pos_row, sec_pos_col = loc_to_pos(int(input("Enter second location to show: ")));
         
         view_pos(my_new_board, sec_pos_row, sec_pos_col, [first_pos_row, first_pos_col])
         
         if((my_new_board[first_pos_row][first_pos_col] == my_new_board[sec_pos_row][sec_pos_col]) and not(first_pos_row == sec_pos_row and first_pos_col == sec_pos_col)):
-            print "Good!"
+            print("Good!")
             discovered.append([first_pos_row, first_pos_col])
             discovered.append([sec_pos_row, sec_pos_col])
     
     duration = time.time() - start_time
     
-    print "YOU FUCKING WON"
-    print "It took you " , duration , " seconds."
+    print("YOU WON")
+    print("It took you " , duration , " seconds.")
     
 if __name__ == "__main__":
     main()
